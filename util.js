@@ -163,6 +163,34 @@ function isInViewport(element) {
 
 /**
  * 
+ * Función de ayuda para simplificar la creación de Nodos
+ * 
+ * @param {String} type Tipo de nodo a crear
+ * @param {String[Array]} classArray Clases que queremos añadir a nuestro elemento
+ * @param {Object} options Opciones extra a añadir a nuestro elemento
+ * @returns 
+ */
+ function createNode(type, classArray = [], options = {}) {
+	let node = document.createElement(type);
+	// Asignamos todas las características de nuestro objeto al nodo creado 
+	for (let [optionKey, optionValue] of Object.entries(options)) {
+		node[optionKey] = optionValue;
+	}
+	
+	// Asignamos las clases controlando errores
+	classArray.map(singleClass => {
+		try {
+		node.classList.add(singleClass); 
+		} catch (error) {
+			console.warn(node, `Could not add the class ${singleClass} to the classList node`);
+		}
+	});      
+	return node;
+}
+
+
+/**
+ * 
  * ¡¡Necesita CSS!!
  * 
  * Alternativa al "confirm/alert/prompt" que te permite avisar al usuario antes de cualquier acción.
